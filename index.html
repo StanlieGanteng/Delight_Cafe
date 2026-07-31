@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Delight Cafe - where every cup delights. Kafe modern dengan kopi premium, suasana elegan, dan pelayanan terbaik. Kunjungi kami di jl delight cafe.">
+    <meta name="keywords" content="Delight Cafe, kafe, kopi, espresso, cappuccino, latte, kafe modern, kafe premium, jl delight cafe, delightcafe">
+    <meta name="author" content="Delight Cafe">
+    <meta property="og:title" content="Delight Cafe - where every cup delights">
+    <meta property="og:description" content="Kafe modern dengan kopi premium dan suasana elegan. Setiap cangkir adalah kebahagiaan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://delightcafe.com">
+    <meta property="og:image" content="https://delightcafe.com/og-image.jpg">
+    <title>Delight Cafe - where every cup delights | Kafe Premium di jl delight cafe</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>☕</text></svg>" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --brown-dark: #3E1F0D;
+            --brown-primary: #6B3A2A;
+            --brown-medium: #8B5E3C;
+            --brown-light: #A0724A;
+            --brown-accent: #D4A574;
+            --cream: #FDF5E6;
+            --cream-dark: #F5E6D3;
+            --white: #FFFFFF;
+            --gold: #C8A96E;
+            --text-dark: #2C1810;
+            --text-medium: #5D3A28;
+            --text-light: #8B6F5E;
+            --shadow-sm: 0 2px 8px rgba(62, 31, 13, 0.08);
+            --shadow-md: 0 4px 20px rgba(62, 31, 13, 0.12);
+            --shadow-lg: 0 8px 40px rgba(62, 31, 13, 0.18);
+            --shadow-xl: 0 16px 60px rgba(62, 31, 13, 0.25);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============ LOADING SCREEN ============ */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-coffee {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--brown-accent);
+            border-top-color: var(--brown-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loader-text {
+            color: var(--brown-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            animation: pulse-text 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-text {
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ============ BACK TO TOP ============ */
+        #back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--brown-primary);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            z-index: 999;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #back-to-top:hover {
+            background: var(--brown-dark);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* ============ NAVBAR ============ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(253, 245, 230, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(107, 58, 42, 0.1);
+            transition: var(--transition);
+            padding: 0 5%;
+            box-shadow: var(--shadow-sm);
+        }
+        nav.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(253, 245, 230, 0.98);
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 70px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--brown-primary);
+            letter-spacing: -0.5px;
+        }
+        .nav-logo i {
+            font-size: 1.8rem;
+            color: var(--brown-medium);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 6px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--brown-primary);
+            background: rgba(107, 58, 42, 0.08);
+        }
+        .nav-links a.nav-cta {
+            background: var(--brown-primary);
+            color: var(--white);
+            font-weight: 600;
+            padding: 10px 22px;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-links a.nav-cta:hover {
+            background: var(--brown-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .cart-icon-nav {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--brown-primary);
+            margin-left: 8px;
+            transition: var(--transition);
+        }
+        .cart-icon-nav:hover {
+            color: var(--brown-dark);
+            transform: scale(1.1);
+        }
+        .cart-badge {
+            position: absolute;
+            top: -10px;
+            right: -14px;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: popBadge 0.3s ease;
+        }
+        @keyframes popBadge {
+            0% {
+                transform: scale(0);
+            }
+            60% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--brown-primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ============ MOBILE MENU ============ */
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 380px;
+                height: 100vh;
+                background: var(--cream);
+                flex-direction: column;
+                padding: 90px 30px 30px;
+                gap: 4px;
+                box-shadow: var(--shadow-xl);
+                transition: var(--transition-slow);
+                z-index: 999;
+                overflow-y: auto;
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links a {
+                font-size: 1.05rem;
+                padding: 12px 20px;
+                display: block;
+                border-radius: var(--radius-md);
+            }
+            .hamburger {
+                display: flex;
+            }
+            .mobile-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 998;
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+            .mobile-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        /* ============ SECTION STYLES ============ */
+        .section {
+            padding: 80px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2.4rem;
+            color: var(--brown-dark);
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .section-title .subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .section-title .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--brown-accent);
+            margin: 12px auto 0;
+            border-radius: 3px;
+        }
+
+        /* ============ HERO ============ */
+        #hero {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #3E1F0D 0%, #5D3020 30%, #6B3A2A 55%, #8B5E3C 80%, #A0724A 100%);
+            overflow: hidden;
+        }
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatBubble 12s ease-in-out infinite;
+        }
+        #hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(200, 169, 110, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatBubble 15s ease-in-out infinite reverse;
+        }
+        @keyframes floatBubble {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(40px, -30px) scale(1.05);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 750px;
+            padding: 0 20px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: var(--cream);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hero-content h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .hero-content .slogan {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: var(--brown-accent);
+            color: var(--brown-dark);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:hover {
+            background: #e0bb8c;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--white);
+            transform: translateY(-3px);
+        }
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            border-radius: 22px;
+        }
+        .btn-dark {
+            background: var(--brown-dark);
+            color: var(--white);
+        }
+        .btn-dark:hover {
+            background: #2a1408;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ============ MENU SECTION ============ */
+        #menu-section {
+            background: var(--white);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            margin-top: -40px;
+            position: relative;
+            z-index: 3;
+            padding-top: 70px;
+        }
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .filter-btn {
+            padding: 10px 22px;
+            border-radius: 25px;
+            border: 2px solid var(--brown-accent);
+            background: transparent;
+            color: var(--brown-medium);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--brown-accent);
+            color: var(--brown-dark);
+            border-color: var(--brown-accent);
+        }
+        .menu-search {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .menu-search input {
+            width: 100%;
+            max-width: 450px;
+            padding: 14px 20px;
+            border-radius: 30px;
+            border: 2px solid #e8ddd0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+            background: var(--cream);
+            color: var(--text-dark);
+        }
+        .menu-search input:focus {
+            border-color: var(--brown-accent);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.15);
+            background: var(--white);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 24px;
+        }
+        .menu-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid #f0e8db;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--brown-accent);
+        }
+        .menu-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--cream-dark);
+            transition: var(--transition-slow);
+        }
+        .menu-card:hover .menu-card-img {
+            transform: scale(1.05);
+        }
+        .menu-card-body {
+            padding: 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card-body h3 {
+            font-size: 1.15rem;
+            color: var(--brown-dark);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .menu-card-body .desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            flex: 1;
+        }
+        .menu-card-body .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--brown-primary);
+            margin-bottom: 12px;
+        }
+        .menu-card-body .btn {
+            align-self: stretch;
+            justify-content: center;
+        }
+
+        /* ============ ABOUT ============ */
+        #about {
+            background: var(--cream-dark);
+            border-radius: var(--radius-xl);
+            margin: 40px auto;
+            padding: 70px 5%;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition-slow);
+        }
+        .about-img:hover img {
+            transform: scale(1.04);
+        }
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--brown-dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .about-text p {
+            color: var(--text-medium);
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+        .about-values {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .value-card {
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--brown-accent);
+        }
+        .value-card i {
+            font-size: 1.6rem;
+            color: var(--brown-medium);
+            margin-bottom: 6px;
+        }
+        .value-card h4 {
+            font-size: 0.9rem;
+            color: var(--brown-dark);
+            font-weight: 600;
+        }
+
+        /* ============ GALLERY ============ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            aspect-ratio: 1;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.12);
+        }
+        .gallery-item::after {
+            content: '\f00e';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: #fff;
+            font-size: 2rem;
+            z-index: 2;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .gallery-item:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.9);
+            transition: var(--transition-slow);
+        }
+        .lightbox.active img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10002;
+            transition: var(--transition);
+        }
+        .lightbox-close:hover {
+            transform: scale(1.2);
+            color: var(--brown-accent);
+        }
+
+        /* ============ TESTIMONI ============ */
+        #testimonials {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            margin: 40px auto;
+            padding: 70px 5%;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: var(--cream);
+            padding: 28px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid transparent;
+        }
+        .testimonial-card:hover {
+            border-color: var(--brown-accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .testimonial-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 3px solid var(--brown-accent);
+        }
+        .testimonial-card .stars {
+            color: #f0b90b;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .testimonial-card .comment {
+            color: var(--text-medium);
+            font-style: italic;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .testimonial-card .name {
+            font-weight: 700;
+            color: var(--brown-dark);
+        }
+
+        /* ============ CONTACT ============ */
+        #contact {
+            background: var(--cream-dark);
+            border-radius: var(--radius-xl);
+            margin: 40px auto;
+            padding: 70px 5%;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-info .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .contact-info .info-item i {
+            font-size: 1.4rem;
+            color: var(--brown-primary);
+            margin-top: 3px;
+            width: 28px;
+            text-align: center;
+        }
+        .contact-info .info-item span {
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            border: 2px solid #e8ddd0;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            outline: none;
+            transition: var(--transition);
+            background: var(--white);
+            resize: vertical;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--brown-accent);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.12);
+        }
+        .contact-form textarea {
+            min-height: 120px;
+        }
+        .map-container {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-top: 20px;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 280px;
+            border: none;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--brown-dark);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 50px 5% 30px;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            color: var(--white);
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        .footer-col a:hover {
+            color: var(--brown-accent);
+            padding-left: 4px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .footer-social a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .footer-social a:hover {
+            background: var(--brown-accent);
+            color: var(--brown-dark);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ============ CART SIDEBAR ============ */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1001;
+            box-shadow: var(--shadow-xl);
+            transition: var(--transition-slow);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .cart-sidebar.active {
+            right: 0;
+        }
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 2;
+        }
+        .cart-header h3 {
+            font-size: 1.2rem;
+            color: var(--brown-dark);
+        }
+        .cart-close {
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: var(--text-medium);
+            transition: var(--transition);
+        }
+        .cart-close:hover {
+            color: #e74c3c;
+        }
+        .cart-items {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f0e8;
+        }
+        .cart-item-img {
+            width: 55px;
+            height: 55px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            background: var(--cream-dark);
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-info h4 {
+            font-size: 0.9rem;
+            color: var(--brown-dark);
+            margin-bottom: 2px;
+        }
+        .cart-item-info .cart-item-price {
+            font-weight: 600;
+            color: var(--brown-primary);
+            font-size: 0.85rem;
+        }
+        .cart-qty {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cart-qty button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: var(--white);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-qty button:hover {
+            background: var(--brown-accent);
+            border-color: var(--brown-accent);
+            color: var(--brown-dark);
+        }
+        .cart-qty span {
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .cart-item-remove {
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .cart-item-remove:hover {
+            transform: scale(1.2);
+        }
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            position: sticky;
+            bottom: 0;
+            background: var(--white);
+            z-index: 2;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            color: var(--brown-dark);
+        }
+        .cart-footer .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+        .cart-empty i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+
+        /* ============ CHECKOUT PAGE ============ */
+        .page-view {
+            display: none;
+        }
+        .page-view.active {
+            display: block;
+        }
+        #checkout-page,
+        #confirmation-page,
+        #thankyou-page,
+        #rating-page {
+            min-height: 100vh;
+            background: var(--cream);
+            padding-top: 90px;
+            padding-bottom: 60px;
+        }
+        .checkout-container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .checkout-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #f0e8db;
+        }
+        .checkout-card h3 {
+            color: var(--brown-dark);
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .checkout-card label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-medium);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+        .checkout-card input,
+        .checkout-card textarea,
+        .checkout-card select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid #e8ddd0;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            outline: none;
+            transition: var(--transition);
+            background: var(--cream);
+        }
+        .checkout-card input:focus,
+        .checkout-card textarea:focus {
+            border-color: var(--brown-accent);
+            background: var(--white);
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+        }
+        .payment-option {
+            padding: 14px;
+            border: 2px solid #e8ddd0;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: var(--white);
+        }
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: var(--brown-primary);
+            background: rgba(107, 58, 42, 0.04);
+            color: var(--brown-primary);
+            font-weight: 600;
+        }
+        .payment-detail {
+            background: var(--cream);
+            padding: 18px;
+            border-radius: var(--radius-md);
+            margin-top: 12px;
+            display: none;
+        }
+        .payment-detail.active {
+            display: block;
+        }
+        .qr-placeholder {
+            width: 160px;
+            height: 160px;
+            background: #f9f9f9;
+            margin: 10px auto;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f0e8;
+            font-size: 0.9rem;
+        }
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--brown-primary);
+            margin-top: 8px;
+        }
+
+        /* ============ RATING STARS ============ */
+        .rating-stars {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            margin: 16px 0;
+        }
+        .rating-stars i {
+            color: #ddd;
+            transition: var(--transition);
+        }
+        .rating-stars i.hover,
+        .rating-stars i.selected {
+            color: #f0b90b;
+        }
+        .rating-emoji {
+            font-size: 4rem;
+            text-align: center;
+            margin: 10px 0;
+            transition: var(--transition);
+        }
+
+        /* ============ SCROLL REVEAL ============ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.4rem;
+                letter-spacing: -1px;
+            }
+            .hero-content .slogan {
+                font-size: 1rem;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            .cart-sidebar {
+                max-width: 100%;
+                right: -100%;
+            }
+            .payment-methods {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            #hero {
+                min-height: 80vh;
+            }
+            .btn {
+                padding: 12px 22px;
+                font-size: 0.9rem;
+            }
+            nav {
+                padding: 0 4%;
+            }
+            .section {
+                padding: 50px 4%;
+            }
+            #about,
+            #testimonials,
+            #contact {
+                padding: 50px 4%;
+                border-radius: var(--radius-lg);
+                margin: 20px auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .menu-card-body h3 {
+                font-size: 0.95rem;
+            }
+            .menu-card-body .price {
+                font-size: 1rem;
+            }
+            .btn-sm {
+                padding: 6px 14px;
+                font-size: 0.78rem;
+            }
+            .cart-sidebar {
+                max-width: 100%;
+            }
+            .checkout-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== LOADING SCREEN ==================== -->
+    <div id="loading-screen">
+        <div class="loader-coffee"></div>
+        <p class="loader-text">Menyeduh kebahagiaan...</p>
+    </div>
+
+    <!-- ==================== BACK TO TOP ==================== -->
+    <button id="back-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ==================== MOBILE OVERLAY ==================== -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo" onclick="navigateTo('home')">
+                <i class="fas fa-mug-hot"></i> Delight Cafe
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero" data-section="hero" class="active" onclick="closeMobileMenu()">Beranda</a></li>
+                <li><a href="#menu-section" data-section="menu-section" onclick="closeMobileMenu()">Menu</a></li>
+                <li><a href="#about" data-section="about" onclick="closeMobileMenu()">Tentang</a></li>
+                <li><a href="#gallery" data-section="gallery" onclick="closeMobileMenu()">Galeri</a></li>
+                <li><a href="#testimonials" data-section="testimonials" onclick="closeMobileMenu()">Testimoni</a></li>
+                <li><a href="#contact" data-section="contact" onclick="closeMobileMenu()">Kontak</a></li>
+                <li><a href="#" class="nav-cta" onclick="openCartSidebar(); closeMobileMenu(); return false;">Pesan Sekarang</a></li>
+                <li>
+                    <span class="cart-icon-nav" onclick="openCartSidebar()" title="Keranjang Belanja">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cart-badge-nav" style="display:none;">0</span>
+                    </span>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT (HOME VIEW) ==================== -->
+    <div id="home-view" class="page-view active">
+
+        <!-- ==================== HERO SECTION ==================== -->
+        <section id="hero">
+            <div class="hero-content">
+                <span class="hero-badge">☕ Premium Coffee House</span>
+                <h1>Delight Cafe</h1>
+                <p class="slogan">where every cup delights</p>
+                <div class="hero-buttons">
+                    <a href="#menu-section" class="btn btn-primary"><i class="fas fa-book-open"></i> Lihat Menu</a>
+                    <a href="#" class="btn btn-outline" onclick="openCartSidebar(); return false;"><i class="fas fa-shopping-cart"></i> Pesan Sekarang</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MENU SECTION ==================== -->
+        <section id="menu-section" class="section reveal">
+            <div class="section-title">
+                <h2>Menu Kami</h2>
+                <p class="subtitle">Pilihan terbaik untuk setiap selera</p>
+                <div class="divider"></div>
+            </div>
+            <!-- Filter Kategori -->
+            <div class="menu-filters">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="kopi">☕ Kopi</button>
+                <button class="filter-btn" data-filter="non-kopi">🍵 Non-Kopi</button>
+                <button class="filter-btn" data-filter="segar">🧊 Minuman Segar</button>
+            </div>
+            <!-- Search -->
+            <div class="menu-search">
+                <input type="text" id="menu-search-input" placeholder="🔍 Cari menu favoritmu...">
+            </div>
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu items rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT SECTION ==================== -->
+        <section id="about" class="reveal">
+            <div class="section-title">
+                <h2>Tentang Kami</h2>
+                <p class="subtitle">Cerita di balik setiap cangkir</p>
+                <div class="divider"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://picsum.photos/600/400?random=10" alt="Interior Delight Cafe" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%23d4a574%22 width=%22600%22 height=%22400%22/><text x=%22300%22 y=%22200%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-size=%2224%22>Delight Cafe Interior</text></svg>'">
+                </div>
+                <div class="about-text">
+                    <h3>Delight Cafe</h3>
+                    <p>Berdiri sejak 2018, Delight Cafe hadir sebagai oasis bagi para pencinta kopi dan teh premium. Kami percaya bahwa setiap cangkir memiliki cerita—dan setiap cerita layak dirayakan dengan cita rasa terbaik.</p>
+                    <p>Dengan biji kopi pilihan dari berbagai daerah Nusantara dan racikan barista berpengalaman, kami menghadirkan pengalaman ngopi yang tak terlupakan.</p>
+                    <div class="about-values">
+                        <div class="value-card">
+                            <i class="fas fa-eye"></i>
+                            <h4>Visi</h4>
+                            <p style="font-size:0.8rem;color:var(--text-light);">Menjadi kafe pilihan utama dengan kualitas dan pelayanan terbaik.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-bullseye"></i>
+                            <h4>Misi</h4>
+                            <p style="font-size:0.8rem;color:var(--text-light);">Menyajikan kopi berkualitas, menciptakan ruang nyaman, dan memberikan kebahagiaan di setiap cangkir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GALLERY SECTION ==================== -->
+        <section id="gallery" class="section reveal">
+            <div class="section-title">
+                <h2>Galeri</h2>
+                <p class="subtitle">Suasana dan momen di Delight Cafe</p>
+                <div class="divider"></div>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery items rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+            <span class="lightbox-close">&times;</span>
+            <img src="" alt="Lightbox" id="lightbox-img">
+        </div>
+
+        <!-- ==================== TESTIMONI SECTION ==================== -->
+        <section id="testimonials" class="reveal">
+            <div class="section-title">
+                <h2>Testimoni Pelanggan</h2>
+                <p class="subtitle">Apa kata mereka tentang kami</p>
+                <div class="divider"></div>
+            </div>
+            <div class="testimonial-grid" id="testimonial-grid">
+                <!-- Testimonials rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT SECTION ==================== -->
+        <section id="contact" class="reveal">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p class="subtitle">Kami siap melayani Anda</p>
+                <div class="divider"></div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>jl delight cafe</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>081400684408</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>delightcafe@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>8 - 22 WIB</span>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0!2d106.8!3d-6.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMDAuMCJTIDEwNsKwNDgnMDAuMCJF!5e0!3m2!1sid!2sid!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi Delight Cafe"></iframe>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form" onsubmit="handleContactForm(event)">
+                    <input type="text" placeholder="Nama Anda" required>
+                    <input type="email" placeholder="Email Anda" required>
+                    <textarea placeholder="Pesan Anda..." required></textarea>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Delight Cafe</h4>
+                    <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;">where every cup delights</p>
+                    <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;">&copy; 2024 Delight Cafe. All rights reserved.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="#hero" onclick="navigateTo('home')">Beranda</a>
+                    <a href="#menu-section" onclick="navigateTo('home')">Menu</a>
+                    <a href="#about" onclick="navigateTo('home')">Tentang</a>
+                    <a href="#contact" onclick="navigateTo('home')">Kontak</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <a href="https://wa.me/6281400684408" target="_blank"><i class="fab fa-whatsapp"></i> 081400684408</a>
+                    <a href="mailto:delightcafe@gmail.com"><i class="fas fa-envelope"></i> delightcafe@gmail.com</a>
+                    <a href="#"><i class="fas fa-map-marker-alt"></i> jl delight cafe</a>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Delight Cafe. Made with ☕ and ❤️
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==================== CHECKOUT PAGE ==================== -->
+    <div id="checkout-page" class="page-view">
+        <div class="checkout-container">
+            <div class="checkout-card">
+                <h3><i class="fas fa-shopping-basket"></i> Ringkasan Pesanan</h3>
+                <div id="checkout-summary"></div>
+                <div class="summary-total" id="checkout-total-display"></div>
+            </div>
+            <div class="checkout-card">
+                <h3><i class="fas fa-user"></i> Data Pemesan</h3>
+                <label>Nama Lengkap *</label>
+                <input type="text" id="order-name" placeholder="Masukkan nama Anda" required>
+                <label>Nomor WhatsApp *</label>
+                <input type="tel" id="order-whatsapp" placeholder="Contoh: 08123456789" required>
+                <label>Nomor Meja (Opsional)</label>
+                <input type="text" id="order-table" placeholder="Nomor meja jika dine-in">
+                <label>Catatan Pesanan (Opsional)</label>
+                <textarea id="order-notes" placeholder="Catatan khusus untuk pesanan Anda..." rows="2"></textarea>
+            </div>
+            <div class="checkout-card">
+                <h3><i class="fas fa-credit-card"></i> Metode Pembayaran</h3>
+                <div class="payment-methods" id="payment-methods">
+                    <div class="payment-option" data-payment="qris">QRIS</div>
+                    <div class="payment-option" data-payment="transfer">Transfer Bank</div>
+                    <div class="payment-option" data-payment="gopay">GoPay</div>
+                    <div class="payment-option" data-payment="ovo">OVO</div>
+                    <div class="payment-option" data-payment="dana">DANA</div>
+                    <div class="payment-option" data-payment="shopeepay">ShopeePay</div>
+                    <div class="payment-option" data-payment="cod">COD (Bayar di Tempat)</div>
+                </div>
+                <div class="payment-detail" id="payment-detail-qris">
+                    <p style="text-align:center;font-weight:600;">Scan QR Code berikut:</p>
+                    <div class="qr-placeholder">📱<br>QR Code<br>Delight Cafe<br><small>QRIS Placeholder</small></div>
+                </div>
+                <div class="payment-detail" id="payment-detail-transfer">
+                    <p><strong>Bank:</strong> BCA</p>
+                    <p><strong>Nomor Rekening:</strong> 1234567890</p>
+                    <p><strong>Atas Nama:</strong> Delight Cafe</p>
+                </div>
+                <div class="payment-detail" id="payment-detail-gopay">
+                    <p><strong>GoPay:</strong> 081400684408</p>
+                    <p><strong>Nama:</strong> Delight Cafe</p>
+                </div>
+                <div class="payment-detail" id="payment-detail-ovo">
+                    <p><strong>OVO:</strong> 081400684408</p>
+                    <p><strong>Nama:</strong> Delight Cafe</p>
+                </div>
+                <div class="payment-detail" id="payment-detail-dana">
+                    <p><strong>DANA:</strong> 081400684408</p>
+                    <p><strong>Nama:</strong> Delight Cafe</p>
+                </div>
+                <div class="payment-detail" id="payment-detail-shopeepay">
+                    <p><strong>ShopeePay:</strong> 081400684408</p>
+                    <p><strong>Nama:</strong> Delight Cafe</p>
+                </div>
+                <div class="payment-detail" id="payment-detail-cod">
+                    <p>💵 Pembayaran dilakukan secara tunai saat pesanan diterima di tempat.</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:1.1rem;padding:16px;" onclick="submitOrder()">
+                <i class="fas fa-check-circle"></i> Pesan Sekarang
+            </button>
+            <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:10px;border-color:var(--brown-medium);color:var(--brown-medium);" onclick="navigateTo('home')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== CONFIRMATION PAGE ==================== -->
+    <div id="confirmation-page" class="page-view">
+        <div class="checkout-container">
+            <div class="checkout-card" style="text-align:center;">
+                <i class="fas fa-clock" style="font-size:3rem;color:#f0b90b;margin-bottom:12px;"></i>
+                <h3 style="color:var(--brown-dark);">Menunggu Pembayaran</h3>
+                <p style="color:var(--text-medium);">Silakan selesaikan pembayaran Anda sesuai metode yang dipilih.</p>
+                <div id="confirmation-details"></div>
+                <button class="btn btn-primary" style="margin-top:16px;" onclick="confirmPayment()">
+                    <i class="fas fa-check-circle"></i> Konfirmasi Pembayaran
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== THANK YOU PAGE ==================== -->
+    <div id="thankyou-page" class="page-view">
+        <div class="checkout-container">
+            <div class="checkout-card" style="text-align:center;">
+                <i class="fas fa-check-circle" style="font-size:4rem;color:#27ae60;margin-bottom:12px;"></i>
+                <h2 style="color:var(--brown-dark);">✅ Terima Kasih Atas Pesanan Anda!</h2>
+                <p style="color:var(--text-medium);">Pesanan Anda sedang diproses.</p>
+                <div id="thankyou-details"></div>
+                <button class="btn btn-primary" style="margin-top:16px;" onclick="showRatingPage()">
+                    <i class="fas fa-star"></i> Beri Penilaian
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RATING PAGE ==================== -->
+    <div id="rating-page" class="page-view">
+        <div class="checkout-container">
+            <div class="checkout-card" style="text-align:center;">
+                <h3 style="color:var(--brown-dark);">Beri Penilaian</h3>
+                <p style="color:var(--text-medium);">Bagaimana pengalaman Anda bersama kami?</p>
+                <div class="rating-emoji" id="rating-emoji">😊</div>
+                <div class="rating-stars" id="rating-stars">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="rating-value" value="0">
+                <textarea id="rating-comment" placeholder="Tulis komentar Anda..." rows="3" style="width:100%;padding:12px;border-radius:8px;border:2px solid #e8ddd0;font-family:inherit;resize:vertical;margin-bottom:12px;"></textarea>
+                <button class="btn btn-primary" onclick="submitRating()">
+                    <i class="fas fa-paper-plane"></i> Kirim Penilaian
+                </button>
+                <p id="rating-success-msg" style="display:none;color:#27ae60;font-weight:600;margin-top:12px;">✅ Terima kasih atas penilaian Anda.</p>
+                <button class="btn btn-outline" id="rating-back-btn" style="display:none;margin-top:10px;border-color:var(--brown-medium);color:var(--brown-medium);width:100%;justify-content:center;" onclick="navigateTo('home')">
+                    <i class="fas fa-home"></i> Kembali ke Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CART SIDEBAR ==================== -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
+            <span class="cart-close" onclick="closeCartSidebar()">&times;</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Keranjang masih kosong</p>
+                <p style="font-size:0.8rem;">Tambahkan menu favorit Anda!</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">Rp 0</span>
+            </div>
+            <button class="btn btn-primary" onclick="goToCheckout()">
+                <i class="fas fa-arrow-right"></i> Lanjutkan Pemesanan
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        (function() {
+            // ==================== DATA MENU ====================
+            const menuData = [
+                { id: 1, name: 'Espresso Delight', desc: 'Espresso murni dengan crema sempurna, kekuatan penuh dalam satu tegukan.',
+                    price: 25000, category: 'kopi', img: 'https://picsum.photos/400/300?random=21' },
+                { id: 2, name: 'Cappuccino Classic', desc: 'Perpaduan espresso, steamed milk, dan foam lembut. Klasik yang tak tergantikan.',
+                    price: 30000, category: 'kopi', img: 'https://picsum.photos/400/300?random=22' },
+                { id: 3, name: 'Caramel Latte', desc: 'Latte creamy dengan sirup karamel homemade, manis legit yang memanjakan.',
+                    price: 35000, category: 'kopi', img: 'https://picsum.photos/400/300?random=23' },
+                { id: 4, name: 'Mocha Bliss', desc: 'Cokelat premium bertemu espresso, topped dengan whipped cream. Surga di setiap tegukan.',
+                    price: 32000, category: 'kopi', img: 'https://picsum.photos/400/300?random=24' },
+                { id: 5, name: 'Matcha Latte', desc: 'Matcha grade-A dari Jepang, dipadukan susu segar. Lembut dan menyegarkan.',
+                    price: 28000, category: 'non-kopi', img: 'https://picsum.photos/400/300?random=25' },
+                { id: 6, name: 'Chocolate Frappe', desc: 'Frappe cokelat tebal dengan serutan cokelat Belgia. Dingin, kaya, dan memuaskan.',
+                    price: 38000, category: 'non-kopi',
+                img: 'https://picsum.photos/400/300?random=26' },
+                { id: 7, name: 'Vanilla Affogato', desc: 'Espresso panas dituang di atas vanilla ice cream. Kontras sempurna panas-dingin.',
+                    price: 40000, category: 'kopi', img: 'https://picsum.photos/400/300?random=27' },
+                { id: 8, name: 'Berry Smoothie', desc: 'Campuran stroberi, blueberry, dan yogurt segar. Sehat, segar, penuh vitamin.',
+                    price: 35000, category: 'segar', img: 'https://picsum.photos/400/300?random=28' },
+                { id: 9, name: 'Lychee Tea Sparkle', desc: 'Teh premium dengan sirup leci dan soda. Ringan, sparkling, dan mewah.',
+                    price: 30000, category: 'segar', img: 'https://picsum.photos/400/300?random=29' },
+                { id: 10, name: 'Hazelnut Latte', desc: 'Latte dengan sirup hazelnut panggang. Aroma kacang yang menggoda dan rasa creamy.',
+                    price: 36000, category: 'kopi', img: 'https://picsum.photos/400/300?random=30' },
+            ];
+
+            // ==================== GALLERY DATA ====================
+            const galleryImages = [
+                'https://picsum.photos/600/600?random=41',
+                'https://picsum.photos/600/600?random=42',
+                'https://picsum.photos/600/600?random=43',
+                'https://picsum.photos/600/600?random=44',
+                'https://picsum.photos/600/600?random=45',
+                'https://picsum.photos/600/600?random=46',
+                'https://picsum.photos/600/600?random=47',
+                'https://picsum.photos/600/600?random=48',
+            ];
+
+            // ==================== TESTIMONI DATA ====================
+            const testimoniData = [
+                { name: 'Rina Maharani', rating: 5,
+                    comment: 'Tempatnya cozy banget! Cappuccino-nya juara, foam-nya lembut sempurna. Pasti balik lagi!',
+                    img: 'https://picsum.photos/100/100?random=51' },
+                { name: 'Andi Pratama', rating: 5,
+                    comment: 'Mocha Bliss terenak yang pernah saya coba. Pelayanan ramah dan cepat. Recommended!',
+                    img: 'https://picsum.photos/100/100?random=52' },
+                { name: 'Sarah Wijaya', rating: 4,
+                    comment: 'Matcha Latte-nya autentik banget, rasa matcha-nya kuat. Suasana kafe sangat Instagramable.',
+                    img: 'https://picsum.photos/100/100?random=53' },
+                { name: 'Budi Santoso', rating: 5,
+                    comment: 'Berry Smoothie segar banget! Cocok untuk ngopi sore bareng teman. Harganya worth it!',
+                    img: 'https://picsum.photos/100/100?random=54' },
+            ];
+
+            // ==================== STATE ====================
+            let cart = JSON.parse(localStorage.getItem('delightCart') || '[]');
+            let currentOrder = JSON.parse(localStorage.getItem('delightOrder') || 'null');
+            let selectedPayment = null;
+            let currentFilter = 'all';
+            let ratingSelected = 0;
+
+            // ==================== DOM REFS ====================
+            const loadingScreen = document.getElementById('loading-screen');
+            const backToTop = document.getElementById('back-to-top');
+            const navbar = document.getElementById('navbar');
+            const navLinks = document.getElementById('nav-links');
+            const hamburger = document.getElementById('hamburger');
+            const mobileOverlay = document.getElementById('mobile-overlay');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartFooter = document.getElementById('cart-footer');
+            const cartTotalAmount = document.getElementById('cart-total-amount');
+            const cartBadgeNav = document.getElementById('cart-badge-nav');
+            const menuGrid = document.getElementById('menu-grid');
+            const galleryGrid = document.getElementById('gallery-grid');
+            const testimonialGrid = document.getElementById('testimonial-grid');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const menuSearchInput = document.getElementById('menu-search-input');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const ratingStars = document.getElementById('rating-stars');
+            const ratingEmoji = document.getElementById('rating-emoji');
+            const ratingValueInput = document.getElementById('rating-value');
+
+            // ==================== FUNCTIONS ====================
+            function saveCart() {
+                localStorage.setItem('delightCart', JSON.stringify(cart));
+            }
+
+            function saveOrder() {
+                localStorage.setItem('delightOrder', JSON.stringify(currentOrder));
+            }
+
+            function getCartTotal() {
+                return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+            }
+
+            function getCartCount() {
+                return cart.reduce((sum, item) => sum + item.qty, 0);
+            }
+
+            function updateCartBadge() {
+                const count = getCartCount();
+                if (count > 0) {
+                    cartBadgeNav.style.display = 'flex';
+                    cartBadgeNav.textContent = count;
+                } else {
+                    cartBadgeNav.style.display = 'none';
+                }
+            }
+
+            function renderMenu(items = menuData) {
+                if (!menuGrid) return;
+                let filtered = items;
+                if (currentFilter !== 'all') {
+                    filtered = filtered.filter(item => item.category === currentFilter);
+                }
+                const searchTerm = menuSearchInput ? menuSearchInput.value.toLowerCase() : '';
+                if (searchTerm) {
+                    filtered = filtered.filter(item =>
+                        item.name.toLowerCase().includes(searchTerm) ||
+                        item.desc.toLowerCase().includes(searchTerm) ||
+                        item.category.toLowerCase().includes(searchTerm)
+                    );
+                }
+                menuGrid.innerHTML = filtered.map(item => `
+                    <div class="menu-card reveal" data-category="${item.category}">
+                        <img src="${item.img}" alt="${item.name}" class="menu-card-img" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect fill=%22%23f5e6d3%22 width=%22400%22 height=%22300%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%238b5e3c%22 font-size=%2220%22>${item.name}</text></svg>'">
+                        <div class="menu-card-body">
+                            <h3>${item.name}</h3>
+                            <p class="desc">${item.desc}</p>
+                            <p class="price">Rp ${item.price.toLocaleString('id-ID')}</p>
+                            <button class="btn btn-primary btn-sm" onclick="addToCart(${item.id})">
+                                <i class="fas fa-plus"></i> Tambah ke Keranjang
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                // Re-trigger reveal for new cards
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal').forEach(el => {
+                        if (el.getBoundingClientRect().top < window.innerHeight - 60) {
+                            el.classList.add('revealed');
+                        }
+                    });
+                }, 100);
+            }
+
+            function renderGallery() {
+                if (!galleryGrid) return;
+                galleryGrid.innerHTML = galleryImages.map((src, i) => `
+                    <div class="gallery-item reveal" onclick="openLightbox('${src}')">
+                        <img src="${src}" alt="Galeri Delight Cafe ${i+1}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><rect fill=%22%23d4a574%22 width=%22300%22 height=%22300%22/><text x=%22150%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23fff%22>Gallery ${i+1}</text></svg>'">
+                    </div>
+                `).join('');
+            }
+
+            function renderTestimonials() {
+                if (!testimonialGrid) return;
+                testimonialGrid.innerHTML = testimoniData.map(t => `
+                    <div class="testimonial-card reveal">
+                        <img src="${t.img}" alt="${t.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23d4a574%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-size=%2230%22>${t.name[0]}</text></svg>'">
+                        <div class="stars">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+                        <p class="comment">"${t.comment}"</p>
+                        <p class="name">- ${t.name}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCartSidebar() {
+            if (!cartItemsEl || !cartFooter) return;
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Keranjang masih kosong</p>
+                        <p style="font-size:0.8rem;">Tambahkan menu favorit Anda!</p>
+                    </div>`;
+                cartFooter.style.display = 'none';
+            } else {
+                cartItemsEl.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}" class="cart-item-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2255%22 height=%2255%22><rect fill=%22%23f5e6d3%22 width=%2255%22 height=%2255%22/></svg>'">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <span class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="cart-qty">
+                            <button onclick="updateCartQty(${index}, -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button onclick="updateCartQty(${index}, 1)">+</button>
+                        </div>
+                        <span class="cart-item-remove" onclick="removeCartItem(${index})" title="Hapus"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                `).join('');
+                cartFooter.style.display = 'block';
+                cartTotalAmount.textContent = 'Rp ' + getCartTotal().toLocaleString('id-ID');
+            }
+            updateCartBadge();
+        }
+
+        // ==================== GLOBAL FUNCTIONS (exposed to onclick) ====================
+        window.addToCart = function(menuId) {
+            const item = menuData.find(m => m.id === menuId);
+            if (!item) return;
+            const existing = cart.find(c => c.id === menuId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+            saveCart();
+            renderCartSidebar();
+            updateCartBadge();
+            // Buka sidebar sebentar untuk feedback
+            if (!cartSidebar.classList.contains('active')) {
+                cartSidebar.classList.add('active');
+                setTimeout(() => {
+                    if (!cartSidebar.matches(':hover')) {
+                        // tetap buka, user bisa close manual
+                    }
+                }, 800);
+            }
+            // Animasi badge
+            cartBadgeNav.style.animation = 'none';
+            cartBadgeNav.offsetHeight;
+            cartBadgeNav.style.animation = 'popBadge 0.3s ease';
+        };
+
+        window.updateCartQty = function(index, delta) {
+            if (index >= 0 && index < cart.length) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+                saveCart();
+                renderCartSidebar();
+                updateCartBadge();
+            }
+        };
+
+        window.removeCartItem = function(index) {
+            if (index >= 0 && index < cart.length) {
+                cart.splice(index, 1);
+                saveCart();
+                renderCartSidebar();
+                updateCartBadge();
+            }
+        };
+
+        window.openCartSidebar = function() {
+            cartSidebar.classList.add('active');
+            renderCartSidebar();
+        };
+
+        window.closeCartSidebar = function() {
+            cartSidebar.classList.remove('active');
+        };
+
+        window.openLightbox = function(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLightbox = function() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        window.toggleMobileMenu = function() {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        };
+
+        window.closeMobileMenu = function() {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        window.navigateTo = function(view) {
+            // Hide all page views
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            if (view === 'home') {
+                document.getElementById('home-view').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Reset order data if coming back from rating
+                if (document.getElementById('rating-success-msg').style.display === 'block') {
+                    document.getElementById('rating-success-msg').style.display = 'none';
+                    document.getElementById('rating-back-btn').style.display = 'none';
+                }
+            } else if (view === 'checkout') {
+                document.getElementById('checkout-page').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderCheckoutSummary();
+            } else if (view === 'confirmation') {
+                document.getElementById('confirmation-page').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderConfirmationDetails();
+            } else if (view === 'thankyou') {
+                document.getElementById('thankyou-page').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderThankyouDetails();
+            } else if (view === 'rating') {
+                document.getElementById('rating-page').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                resetRating();
+            }
+            closeCartSidebar();
+            closeMobileMenu();
+        };
+
+        window.goToCheckout = function() {
+            if (cart.length === 0) {
+                alert('Keranjang masih kosong. Silakan tambahkan menu terlebih dahulu.');
+                return;
+            }
+            selectedPayment = null;
+            document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+            document.querySelectorAll('.payment-detail').forEach(d => d.classList.remove('active'));
+            navigateTo('checkout');
+        };
+
+        window.submitOrder = function() {
+            const name = document.getElementById('order-name').value.trim();
+            const whatsapp = document.getElementById('order-whatsapp').value.trim();
+            const table = document.getElementById('order-table').value.trim();
+            const notes = document.getElementById('order-notes').value.trim();
+
+            if (!name) { alert('Nama lengkap wajib diisi!');
+                document.getElementById('order-name').focus(); return; }
+            if (!whatsapp) { alert('Nomor WhatsApp wajib diisi!');
+                document.getElementById('order-whatsapp').focus(); return; }
+            if (!/^[0-9]{10,14}$/.test(whatsapp.replace(/[^0-9]/g, ''))) {
+                alert('Nomor WhatsApp tidak valid! Harap masukkan 10-14 digit angka.');
+                document.getElementById('order-whatsapp').focus();
+                return;
+            }
+            if (!selectedPayment) { alert('Silakan pilih metode pembayaran!'); return; }
+            if (cart.length === 0) { alert('Keranjang kosong!'); return; }
+
+            const orderId = 'DLT-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,
+                4).toUpperCase();
+            const total = getCartTotal();
+
+            currentOrder = {
+                orderId,
+                name,
+                whatsapp: whatsapp.replace(/[^0-9]/g, ''),
+                table,
+                notes,
+                payment: selectedPayment,
+                items: [...cart],
+                total,
+                status: 'waiting_payment',
+                timestamp: new Date().toISOString(),
+            };
+            saveOrder();
+            navigateTo('confirmation');
+        };
+
+        window.confirmPayment = function() {
+            if (!currentOrder) return;
+            currentOrder.status = 'processing';
+            saveOrder();
+            navigateTo('thankyou');
+        };
+
+        window.showRatingPage = function() {
+            navigateTo('rating');
+        };
+
+        window.submitRating = function() {
+            const rating = parseInt(ratingValueInput.value) || 0;
+            if (rating === 0) {
+                alert('Silakan pilih rating bintang terlebih dahulu!');
+                return;
+            }
+            const comment = document.getElementById('rating-comment').value.trim();
+            // Simpan rating (simulasi)
+            const ratings = JSON.parse(localStorage.getItem('delightRatings') || '[]');
+            ratings.push({
+                orderId: currentOrder ? currentOrder.orderId : 'N/A',
+                rating,
+                comment,
+                timestamp: new Date().toISOString(),
+            });
+            localStorage.setItem('delightRatings', JSON.stringify(ratings));
+            // Tampilkan pesan sukses
+            document.getElementById('rating-success-msg').style.display = 'block';
+            document.getElementById('rating-back-btn').style.display = 'flex';
+            document.getElementById('rating-stars').style.pointerEvents = 'none';
+            document.querySelector('.rating-stars').style.opacity = '0.6';
+            // Reset cart & order after rating
+            cart = [];
+            saveCart();
+            currentOrder = null;
+            saveOrder();
+            renderCartSidebar();
+            updateCartBadge();
+        };
+
+        window.handleContactForm = function(e) {
+            e.preventDefault();
+            const form = e.target;
+            alert('✅ Pesan Anda telah terkirim! Tim Delight Cafe akan menghubungi Anda segera.');
+            form.reset();
+        };
+
+        // ==================== RENDER CHECKOUT ====================
+        function renderCheckoutSummary() {
+            const summaryEl = document.getElementById('checkout-summary');
+            const totalEl = document.getElementById('checkout-total-display');
+            if (!summaryEl || !totalEl) return;
+            let html = '';
+            cart.forEach(item => {
+                html += `
+                    <div class="summary-item">
+                        <span>${item.name} x${item.qty}</span>
+                        <span>Rp ${(item.price * item.qty).toLocaleString('id-ID')}</span>
+                    </div>`;
+            });
+            summaryEl.innerHTML = html || '<p style="color:var(--text-light);">Tidak ada item.</p>';
+            totalEl.innerHTML = '<strong>Total Bayar: Rp ' + getCartTotal().toLocaleString('id-ID') + '</strong>';
+        }
+
+        function renderConfirmationDetails() {
+            const el = document.getElementById('confirmation-details');
+            if (!el || !currentOrder) return;
+            el.innerHTML = `
+                <p><strong>Order ID:</strong> ${currentOrder.orderId}</p>
+                <p><strong>Nama:</strong> ${currentOrder.name}</p>
+                <p><strong>Total Bayar:</strong> Rp ${currentOrder.total.toLocaleString('id-ID')}</p>
+                <p><strong>Metode:</strong> ${currentOrder.payment.toUpperCase()}</p>
+                <p><strong>Status:</strong> ⏳ Menunggu Pembayaran</p>
+                ${currentOrder.table ? `<p><strong>Meja:</strong> ${currentOrder.table}</p>` : ''}
+            `;
+        }
+
+        function renderThankyouDetails() {
+            const el = document.getElementById('thankyou-details');
+            if (!el || !currentOrder) return;
+            el.innerHTML = `
+                <p><strong>Order ID:</strong> ${currentOrder.orderId}</p>
+                <p><strong>Nama:</strong> ${currentOrder.name}</p>
+                <p><strong>Total Pembayaran:</strong> Rp ${currentOrder.total.toLocaleString('id-ID')}</p>
+                <p><strong>Metode Pembayaran:</strong> ${currentOrder.payment.toUpperCase()}</p>
+            `;
+        }
+
+        function resetRating() {
+            ratingSelected = 0;
+            ratingValueInput.value = '0';
+            document.getElementById('rating-success-msg').style.display = 'none';
+            document.getElementById('rating-back-btn').style.display = 'none';
+            document.getElementById('rating-stars').style.pointerEvents = 'auto';
+            document.querySelector('.rating-stars').style.opacity = '1';
+            document.getElementById('rating-comment').value = '';
+            updateRatingStars(0);
+            ratingEmoji.textContent = '😊';
+        }
+
+        function updateRatingStars(rating) {
+            const stars = ratingStars.querySelectorAll('i');
+            stars.forEach((star, i) => {
+                if (i < rating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+            const emojis = ['😞', '😐', '😊', '😍', '🤩'];
+            ratingEmoji.textContent = rating > 0 ? emojis[rating - 1] : '😊';
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        // Mobile overlay click
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+
+        // Lightbox close with Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (lightbox.classList.contains('active')) closeLightbox();
+                if (cartSidebar.classList.contains('active')) closeCartSidebar();
+                closeMobileMenu();
+            }
+        });
+
+        // Payment method selection
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                paymentOptions.forEach(p => p.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedPayment = this.dataset.payment;
+                // Hide all payment details
+                document.querySelectorAll('.payment-detail').forEach(d => d.classList
+                    .remove('active'));
+                const detailEl = document.getElementById('payment-detail-' + selectedPayment);
+                if (detailEl) detailEl.classList.add('active');
+            });
+        });
+
+        // Rating stars interaction
+        if (ratingStars) {
+            const stars = ratingStars.querySelectorAll('i');
+            stars.forEach(star => {
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    stars.forEach((s, i) => {
+                        if (i < rating) s.classList.add('hover');
+                        else s.classList.remove('hover');
+                    });
+                });
+                star.addEventListener('mouseleave', function() {
+                    stars.forEach(s => s.classList.remove('hover'));
+                    updateRatingStars(ratingSelected);
+                });
+                star.addEventListener('click', function() {
+                    ratingSelected = parseInt(this.dataset.rating);
+                    ratingValueInput.value = ratingSelected;
+                    updateRatingStars(ratingSelected);
+                });
+            });
+        }
+
+        // Menu search
+        if (menuSearchInput) {
+            menuSearchInput.addEventListener('input', function() {
+                renderMenu(menuData);
+            });
+        }
+
+        // Filter buttons
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderMenu(menuData);
+            });
+        });
+
+        // Scroll events
+        window.addEventListener('scroll', function() {
+            // Navbar shadow
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            // Back to top
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            // Active nav link
+            const sections = document.querySelectorAll(
+                '#hero, #menu-section, #about, #gallery, #testimonials, #contact');
+            let currentSection = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    currentSection = section.id;
+                }
+            });
+            document.querySelectorAll('.nav-links a[data-section]').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+            // Scroll reveal
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 60 && !el.classList
+                    .contains('revealed')) {
+                    el.classList.add('revealed');
+                }
+            });
+        });
+
+        // Back to top click
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Close cart sidebar when clicking outside (on overlay)
+        document.addEventListener('click', function(e) {
+            if (cartSidebar.classList.contains('active') &&
+                !cartSidebar.contains(e.target) &&
+                !e.target.closest('.cart-icon-nav') &&
+                !e.target.closest('.nav-cta') &&
+                !e.target.closest('button[onclick*="addToCart"]') &&
+                !e.target.closest('button[onclick*="openCartSidebar"]') &&
+                !e.target.closest('button[onclick*="goToCheckout"]')) {
+                // Don't auto-close; user may want to keep it open
+            }
+        });
+
+        // ==================== INITIALIZATION ====================
+        function init() {
+            renderMenu(menuData);
+            renderGallery();
+            renderTestimonials();
+            renderCartSidebar();
+            updateCartBadge();
+
+            // Trigger initial reveal
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight - 60) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }, 200);
+
+            // Hide loading screen
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1000);
+
+            // If there's a pending order, show appropriate page
+            if (currentOrder) {
+                if (currentOrder.status === 'waiting_payment') {
+                    navigateTo('confirmation');
+                } else if (currentOrder.status === 'processing') {
+                    navigateTo('thankyou');
+                }
+            }
+        }
+
+        // Run initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // ==================== SERVICE WORKER REGISTRATION (OPTIONAL) ====================
+        // Not included to keep single-file simplicity, but can be added for PWA features.
+
+        console.log('☕ Delight Cafe - Website siap! Seluruh fitur berjalan dalam satu file index.html');
+        console.log('📋 Fitur: Menu, Keranjang, Pemesanan, Pembayaran, Konfirmasi, Rating, Galeri, Testimoni, Kontak');
+        console.log('💾 Data tersimpan di LocalStorage untuk persistensi.');
+    })();
+</script>
+</body>
+</html>
